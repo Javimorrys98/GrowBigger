@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 
 class PantallaCarga :Pantalla() {
 
-    private lateinit var fondo: Texture
     private lateinit var barra: Texture
     private lateinit var piloto: Texture
     private lateinit var fuente: BitmapFont
@@ -58,10 +57,12 @@ class PantallaCarga :Pantalla() {
         am.load("pezEnemigo2.png",Texture::class.java)
         am.load("medusa.png",Texture::class.java)
         am.load("tiburon.png",Texture::class.java)
+        am.load("replay.png",Texture::class.java)
         am.load("mainMenu.ogg", Music::class.java)
         am.load("partida.ogg", Music::class.java)
         am.load("rip.mp3", Sound::class.java)
         am.load("gnom.mp3", Sound::class.java)
+        am.load("boton.mp3", Sound::class.java)
         am.load("edo-64.fnt", BitmapFont::class.java)
         am.load("edo-18.fnt", BitmapFont::class.java)
     }

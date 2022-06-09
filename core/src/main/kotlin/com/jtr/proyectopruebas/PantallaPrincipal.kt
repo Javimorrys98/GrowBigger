@@ -2,6 +2,7 @@ package com.jtr.proyectopruebas
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
@@ -14,6 +15,8 @@ class PantallaPrincipal: Pantalla() {
     val quit= am.get<Texture>("quit.png")
     //Musica
     val musica= am.get<Music>("mainMenu.ogg")
+    //Sonidos
+    val boton= am.get<Sound>("boton.mp3")
     //Fondo
     val fondo= am.get<Texture>("Fondo.png")
 
@@ -31,11 +34,13 @@ class PantallaPrincipal: Pantalla() {
     override fun actualizar(delta: Float) {
         //Si pulsamos start empieza la partida.
         if((puntoClick.x>=270f && puntoClick.x<=270f+start.width) && (puntoClick.y>=220f && puntoClick.y<=220f+start.height)){
+            boton.play()
             Juego.instancia.screen.dispose()
             Juego.instancia.screen=PantallaJuego()
         }
         //Si pulsamos quit salimos del juego.
         else if((puntoClick.x>=270f && puntoClick.x<=270f+quit.width) && (puntoClick.y>=100f && puntoClick.y<=100f+quit.height)){
+            boton.play()
             Gdx.app.exit()
         }
     }
@@ -44,7 +49,7 @@ class PantallaPrincipal: Pantalla() {
         sb.draw(fondo,0f,0f,0,0,ANCHO, ALTO)
         fuente.draw(sb,"GROW BIGGER!",180f,400f)
         sb.draw(start,270f,220f)
-        sb.draw(quit,270f,100f)
+        sb.draw(quit,270f,130f)
     }
 
     override fun depurar(delta: Float) {
