@@ -1,0 +1,87 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven { url 'https://s01.oss.sonatype.org' }
+		mavenLocal()
+		google()
+		gradlePluginPortal()
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+
+		// This follows advice from https://blog.gradle.org/log4j-vulnerability
+		constraints {
+			classpath("org.apache.logging.log4j:log4j-core") {
+				version {
+					strictly("[2.17, 3[")
+					prefer("2.17.0")
+				}
+				because("CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities")
+			}
+		}
+	}
+}
+
+allprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+}
+
+//task writeAllAssetsToFile {
+//	doLast {
+//		// projectfolder/assets
+//		def assetsFolder = new File("${project.rootDir}/assets/")
+//		// projectfolder/assets/assets.txt
+//		def assetsFile = new File(assetsFolder, "assets.txt")
+//		// delete that file in case we've already created it
+//		assetsFile.delete()
+//
+//		// iterate through all files inside that folder
+//		// convert it to a relative path
+//		// and append it to assets.txt the file
+//		fileTree(assetsFolder).collect {assetsFolder.relativePath(it) }.each {
+//			assetsFile.append(it + "\n")
+//		}
+//	}
+//}
+
+configure(subprojects) {
+	apply plugin: 'java-library'
+	apply plugin: 'kotlin'
+	sourceCompatibility = 1.8
+	compileJava {
+		options.incremental = true
+	}
+	dependencies {
+		// This follows advice from https://blog.gradle.org/log4j-vulnerability
+		constraints {
+			implementation("org.apache.logging.log4j:log4j-core") {
+				version {
+					strictly("[2.17, 3[")
+					prefer("2.17.0")
+				}
+				because("CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities")
+			}
+		}
+	}
+//	compileJava.dependsOn writeAllAssetsToFile
+
+}
+
+subprojects {
+	version = '0.0.1'
+	ext.appName = 'proyectopruebas'
+	repositories {
+		mavenCentral()
+		maven { url 'https://s01.oss.sonatype.org' }
+		mavenLocal()
+		gradlePluginPortal()
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+		maven { url 'https://jitpack.io' }
+	}
+}
+
+eclipse.project.name = 'proyectopruebas' + '-parent'
